@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MUKUND AGRO SEEDS</title>
+
+  <style>
+    /* =========================================
+       GLOBAL STYLES
+    ========================================= */
+    :root {
+      --primary-yellow: #f7e96c;
+      --primary-dark: #d4b400;
+      --text-color: #333;
+      --bg-color: #fff8d6;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box; /* Ensures padding doesn't break width */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    /* =========================================
+       NAVIGATION BAR
+    ========================================= */
+    nav.main-nav {
+      background-color: var(--primary-yellow);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    nav.main-nav .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    nav.main-nav img.logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .shop-info h1 {
+      margin: 0;
+      font-size: 20px; /* Adjusted for better fit */
+      color: #222;
+      line-height: 1.2;
+    }
+    
+    .shop-info h4 {
+      margin: 2px 0 0 0;
+      font-size: 12px;
+      font-weight: normal;
+      color: #444;
+    }
+
+    /* Navigation Links */
+    .nav-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-links button {
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+      white-space: nowrap; /* Prevents text breaking */
+    }
+
+    .nav-links button:hover,
+    .nav-links button.active {
+      background: var(--primary-dark);
+      color: white;
+    }
+
+    /* Mobile Nav Overrides */
+    @media (max-width: 768px) {
+      nav.main-nav {
+        flex-direction: column;
+        align-items: stretch; /* Full width */
+        padding: 10px;
+      }
+
+      nav.main-nav .logo-area {
+        margin-bottom: 10px;
+        justify-content: center; /* Center logo on mobile */
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto; /* Scroll horizontally */
+        padding-bottom: 5px;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+      }
+
+      .nav-links::-webkit-scrollbar {
+        height: 4px;
+      }
+      
+      .nav-links::-webkit-scrollbar-thumb {
+        background: #ccc; 
+        border-radius: 4px;
+      }
+    }
+
+    /* =========================================
+       PAGE SECTIONS
+    ========================================= */
+    .view-section {
+      display: none;
+      padding: 15px; /* Reduced padding for mobile */
+      max-width: 1200px;
+      margin: 0 auto;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================
+       HERO SECTION (FIXED FOR MOBILE)
+    ========================================= */
+    .hero {
+      position: relative;
+      text-align: center;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    /* THIS WAS THE MAIN ISSUE - CHANGED FROM FIXED PIXELS TO % */
+    .hero img {
+      width: 100%; 
+      height: auto;
+      display: block;
+      padding-top: 25px;
+      object-fit: cover;
+      min-height: 250px; /* Ensure visibility on mobile */
+    }
+     .hero img :hover {
+      width: 900px; 
+      cursor: pointer;
+      transition: ease-in .3s;
+      padding-top: 25px;
+      
+       /* Ensure visibility on mobile */
+    }
+
+
+    .hero-overlay {
+      position: absolute;
+      top:50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%; /* Wider on mobile */
+      max-width: 1200px;
+    }
+    
+    .hero-overlay h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .action-buttons button {
+      margin: 5px;
+      padding: 10px 20px;
+      background: var(--primary-yellow);
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* =========================================
+       FORMS
+    ========================================= */
+    .form-container {
+      background: var(--primary-yellow);
+      width: 100%; /* Full width on mobile */
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .form-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .form-container button {
+      width: 100%;
+      background: var(--primary-dark);
+      color: white;
+      padding: 12px;
+      
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Google Button */
+    .google-btn {
+      background-color: white ;
+      color: #333 ;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      
+      
+        
+    }
+    .google-btn:hover {
+      background-color: #f1f1f1 !important;
+    }
+
+    /* =========================================
+       TABLES
+    ========================================= */
+    .table-responsive {
+      overflow-x: auto;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px; /* Ensures horizontal scroll trigger */
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #51c54f;
+      color: white;
+    }
+
+    /* =========================================
+       BILLING
+    ========================================= */
+    .billing-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .billing-nav button {
+      background: #ddd;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .billing-nav button.active-tab {
+      background: #222;
+      color: var(--primary-yellow);
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
+
+    .total-display {
+      font-size: 1.3em;
+      color: #2e8b57;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    /* =========================================
+       ABOUT & FOOTER
+    ========================================= */
+    .about-container {
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.5); /* Slight background for readability */
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      background-color: var(--primary-yellow);
+      padding: 20px 10px;
+      margin-top: 40px;
+    }
+
+    .links {
+      display: flex;
+      padding-top: 20px;
+      justify-content: center;
+      flex-wrap: wrap; /* Allows items to stack on mobile */
+      gap: 30px;
+    }
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    
+    .item h3 {
+        margin: 5px 0 0 0;
+        font-size: 14px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav class="main-nav">
+    <div class="logo-area" onclick="switchView('home')">
+      <img src="https://i.pinimg.com/736x/21/9a/c0/219ac0de0c997ac3b03cd2f7d75e6a50.jpg" alt="Logo" class="logo">
+      <div class="title-group">
+        <div class="shop-info">
+          <h1>MUKUND AGRO SEEDS</h1>
+          <h4>Address: <q>Ranasan, Ta - Talod, Dist - Sabarkantha</q></h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <button onclick="switchView('home')">Home</button>
+      <button onclick="switchView('products')">Products</button>
+      <button onclick="switchView('billing')">Billing App</button>
+      <button onclick="switchView('about')">About Us</button>
+      <button onclick="switchView('login')">Login</button>
+    </div>
+  </nav>
+
+  <div id="home" class="view-section active">
+    <div class="hero">
+      <img src="https://i.pinimg.com/736x/b1/b3/2f/b1b32f310253ddc52cb8ecf17bb94958.jpg" alt="Farm Image">
+      <div class="hero-overlay">
+        <h2>Welcome to Mukund Agro Seeds</h2>
+        <p>This shop has been running successfully for over 30 years with more than 1000 satisfied customers.</p>
+        <div class="action-buttons">
+          <button onclick="switchView('register')">Register Now</button>
+          <button onclick="switchView('billing')">Create Bill</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+      
+  
+  <div id="products" class="view-section">
+    <h1 style="text-align: center; color: #2e8b57; font-size: 24px;">Our Pesticide Products</h1>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price (₹)</th>
+            <th>Info</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PENDI</td>
+            <td>1L / 500ML</td>
+            <td>750 / 400</td>
+            <td><a href="#">Watch Video</a></td>
+          </tr>
+          <tr>
+            <td>Thaioflo</td>
+            <td>250g / 500g</td>
+            <td>140 / 240</td>
+            <td><a href="#">Watch Video</a></td>
+          </tr>
+          <tr>
+            <td>Emezathaper 30%</td>
+            <td>500g / 1kg</td>
+            <td>250 / 500</td>
+            <td><a href="#">Watch Video</a></td>
+          </tr>
+          <tr>
+            <td>Cyper</td>
+            <td>250ml / 500ml</td>
+            <td>90 / 140</td>
+            <td><a href="#">Watch Video</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="billing" class="view-section">
+    <div style="background: #222; color: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+      <h2 style="margin:0; font-size: 20px;">Billing System</h2>
+      <small id="user-greeting" style="color: yellow;"></small>
+    </div>
+
+    <div class="billing-nav">
+      <button onclick="showBillingTab('b-bill')" class="active-tab">New Bill</button>
+      <button onclick="showBillingTab('b-stock')">Stock</button>
+      <button onclick="showBillingTab('b-cust')">Customers</button>
+      <button onclick="showBillingTab('b-udhaar')">Udhaar</button>
+    </div>
+
+    <div id="b-bill" class="billing-tab">
+      <div class="card">
+        <h3>1. Customer Details</h3>
+        <input id="cname" placeholder="Customer Name" />
+        <input id="cmobile" type="number" placeholder="Mobile Number" oninput="autoFillCustomer()" />
+        <input id="caddress" placeholder="Address" />
+        <button onclick="saveCustomer()"
+          style="background: #2e8b57; color: white; border:none; padding: 10px; border-radius: 4px; width: 100%;">Save
+          Customer</button>
+      </div>
+
+      <div class="card">
+        <h3>2. Add Items</h3>
+        <input id="searchProduct" placeholder="Search product name..." oninput="searchProducts()" />
+        <select id="productSelect" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px;"></select>
+        <div style="display: flex; gap: 10px;">
+          <input id="qty" type="number" value="1" placeholder="Qty" style="width: 80px;" />
+          <button onclick="addToCart()" style="flex: 1; background: #d4b400; border: none; font-weight: bold; border-radius: 4px;">ADD TO
+            CART</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>3. Cart</h3>
+        <div class="table-responsive">
+          <table id="cartTable">
+            <thead>
+              <tr style="background:#eee; color:black;">
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>X</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="total-display">Grand Total: ₹<span id="grandTotal">0</span></div>
+
+        <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+          <button onclick="printBill()" style="background: #333; color: white; padding: 12px; border:none; border-radius: 6px;">🖨️ Print
+            Bill</button>
+          <button onclick="shareWhatsApp()" style="background: #25d366; color: white; padding: 12px; border:none; border-radius: 6px;">📱
+            Share on WhatsApp</button>
+          <button onclick="saveUdhaar()" style="background: #d9534f; color: white; padding: 12px; border:none; border-radius: 6px;">📕 Save
+            to Udhaar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="b-stock" class="billing-tab" style="display:none;">
+      <div class="card">
+        <h3>Add New Product</h3>
+        <input id="pname" placeholder="Product Name" />
+        <input id="pmrp" type="number" placeholder="Price (MRP)" />
+        <input id="pstock" type="number" placeholder="Stock Qty" />
+        <button onclick="addProduct()" style="background: #2e8b57; color: white; padding: 10px; width: 100%; border-radius: 6px; border: none;">Add to
+          Stock</button>
+      </div>
+      <div class="table-responsive">
+        <table id="stockTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="b-cust" class="billing-tab" style="display:none;">
+      <h3>Customer List</h3>
+      <div class="table-responsive">
+        <table id="customersTable"></table>
+      </div>
+    </div>
+    <div id="b-udhaar" class="billing-tab" style="display:none;">
+      <h3>Udhaar Records</h3>
+      <div class="table-responsive">
+        <table id="udhaarTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="about" class="view-section">
+      <div class="about-container">
+        <h1>About Us</h1>
+        <p>
+          Welcome to <b>Mukund Agro Seeds</b>!
+          For over <b>30 years</b>, we have been proudly serving our customers with high-quality agricultural products,
+          trusted seeds, fertilizers, and pesticides.
+          Established in <b>1995</b>, our shop has grown from a small local business to a trusted name among farmers and
+          growers in the region.
+        </p>
+        <p>
+        We thank all our loyal customers who have been part of our 30-year journey.
+        At <b>Mukund Agro Seeds</b>, we continue to grow — with you, for you, and because of you. 🌱
+        </p>
+      </div>
+  </div>
+
+  <div id="login" class="view-section">
+    <div class="form-container">
+      <h2 style="text-align: center;">Login</h2>
+      <form onsubmit="event.preventDefault(); alert('Login Successful!'); switchView('home');">
+        <label>Mobile Number</label>
+        <input type="number" placeholder="Enter Mobile" required>
+        <label>Password</label>
+        <input type="password" placeholder="Enter Password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      <button type="button" class="google-btn" onclick="window.handleGoogleLogin()">
+        
+        Sign in with Google
+      </button>
+
+      <p style="text-align: center; margin-top: 15px;">
+        New User? <a href="#" onclick="switchView('register')">Register Here</a>
+      </p>
+    </div>
+  </div>
+
+  <div id="register" class="view-section">
+    <div class="form-container">
+      <h2 style="text-align: center;">Register</h2>
+      <form onsubmit="event.preventDefault(); alert('Registered Successfully!'); switchView('home');">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your Name" required>
+        <label>Mobile Number</label>
+        <input type="number" placeholder="Mobile" required>
+        <label>Address</label>
+        <input type="text" placeholder="Village/City" required>
+        <label>Password</label>
+        <input type="password" placeholder="Create Password" required>
+        <button type="submit">Register Now</button>
+      </form>
+
+      <button type="button" class="google-btn" onclick="window.handleGoogleLogin()">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G">
+        Sign in with Google
+      </button>
+
+      <p style="text-align: center; margin-top: 15px;">
+        Already have an account? <a href="" onclick="switchView('login')">Login</a>
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="links">
+      <div class="item">
+        <a href="https://www.google.com/maps/place/SHRI+MUKUND+AGRO+SEEDS/" target="_blank">
+          <img src="https://i.pinimg.com/736x/66/1e/98/661e98a8e38f681575da93d0a1c3f4fc.jpg" width="50px" height="50px" alt="">
+        </a>
+        <h3>Location</h3>
+      </div>
+      
+      <div class="item">
+        <a href="https://www.instagram.com/mukund_agro_7378/" target="_blank">
+          <img src="https://i.pinimg.com/1200x/eb/9f/6d/eb9f6de3b91eee469812279f638d88ca.jpg" width="50px" height="50px" alt="">
+        </a>
+        <h3>Instagram</h3>
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+        <p>© 2025 Mukund Agro Seeds — All Rights Reserved</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    // --- FIREBASE SETUP ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCkjPbAOCgfoN5kzsfok_Ng8eLwpAA7HpU",
+      authDomain: "brothersoutfit-c49fc.firebaseapp.com",
+      databaseURL: "https://brothersoutfit-c49fc-default-rtdb.firebaseio.com",
+      projectId: "brothersoutfit-c49fc",
+      storageBucket: "brothersoutfit-c49fc.firebasestorage.app",
+      messagingSenderId: "1031575497831",
+      appId: "1:1031575497831:web:582ad1d0076258cf0778c2",
+      measurementId: "G-HWFLR610B6"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // EXPOSE GOOGLE LOGIN FUNCTION TO WINDOW
+    window.handleGoogleLogin = function () {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          // Successful login
+          alert(`Welcome back, ${user.displayName}!`);
+
+          // Switch to billing view
+          switchView('home');
+
+          // Display user name in billing
+          document.getElementById('user-greeting').innerText = `User: ${user.displayName}`;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert("Login Failed: " + errorMessage);
+        });
+    }
+
+    // --- EXISTING APP LOGIC ---
+    // (Exposing functions to window so onclick="" works in HTML)
+
+    // Data Storage
+    let PRODUCTS = JSON.parse(localStorage.getItem("products") || "[]");
+    let CUSTOMERS = JSON.parse(localStorage.getItem("customers") || "{}");
+    let UDHAAR = JSON.parse(localStorage.getItem("udhaar") || "{}");
+    let CART = [];
+
+    // Helper: Save Data
+    function saveData() {
+      localStorage.setItem("products", JSON.stringify(PRODUCTS));
+      localStorage.setItem("customers", JSON.stringify(CUSTOMERS));
+      localStorage.setItem("udhaar", JSON.stringify(UDHAAR));
+    }
+
+    // View Switching
+    window.switchView = function (viewId) {
+      document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+      if (viewId === 'billing') window.loadProducts();
+    }
+
+    window.showBillingTab = function (tabId) {
+      document.querySelectorAll('.billing-tab').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.billing-nav button').forEach(btn => btn.classList.remove('active-tab'));
+      document.getElementById(tabId).style.display = 'block';
+      event.target.classList.add('active-tab');
+      if (tabId === 'b-stock') window.loadStock();
+      if (tabId === 'b-cust') window.loadCustomers();
+      if (tabId === 'b-udhaar') window.loadUdhaar();
+    }
+
+    // Billing Functions
+    window.loadProducts = function (list = PRODUCTS) {
+      const sel = document.getElementById('productSelect');
+      sel.innerHTML = "";
+      list.forEach((p, i) => {
+        let realIndex = PRODUCTS.indexOf(p);
+        sel.innerHTML += `<option value="${realIndex}">${p.name} (₹${p.mrp}) - Stock: ${p.stock}</option>`;
+      });
+    }
+
+    window.searchProducts = function () {
+      let q = document.getElementById('searchProduct').value.toLowerCase();
+      let filtered = PRODUCTS.filter(p => p.name.toLowerCase().includes(q));
+      window.loadProducts(filtered);
+    }
+
+    window.addToCart = function () {
+      const idx = document.getElementById('productSelect').value;
+      const qty = Number(document.getElementById("qty").value);
+      if (idx === "") return alert("No product selected");
+      let p = PRODUCTS[idx];
+      CART.push({ name: p.name, qty, price: p.mrp });
+      window.renderCart();
+    }
+
+    window.renderCart = function () {
+      const tbl = document.querySelector('#cartTable tbody');
+      tbl.innerHTML = "";
+      let total = 0;
+      CART.forEach((c, i) => {
+        let t = c.qty * c.price;
+        total += t;
+        tbl.innerHTML += `<tr><td>${c.name}</td><td>${c.qty}</td><td>${c.price}</td><td>${t}</td><td><button onclick="window.delItem(${i})" style="color:red;border:none;">X</button></td></tr>`;
+      });
+      document.getElementById('grandTotal').innerText = total;
+    }
+    window.delItem = function (i) { CART.splice(i, 1); window.renderCart(); }
+
+    window.addProduct = function () {
+      const name = document.getElementById('pname').value;
+      const mrp = document.getElementById('pmrp').value;
+      const stock = document.getElementById('pstock').value;
+      if (!name) return;
+      PRODUCTS.push({ name, mrp, stock });
+      saveData();
+      alert("Product Added");
+      window.loadStock();
+    }
+
+    window.loadStock = function () {
+      document.querySelector('#stockTable tbody').innerHTML = PRODUCTS.map(p => `<tr><td>${p.name}</td><td>${p.mrp}</td><td>${p.stock}</td></tr>`).join('');
+    }
+
+    window.saveCustomer = function () {
+      const m = document.getElementById('cmobile').value;
+      const n = document.getElementById('cname').value;
+      const a = document.getElementById('caddress').value;
+      if (!m) return;
+      CUSTOMERS[m] = { name: n, mobile: m, address: a };
+      saveData();
+      alert("Saved");
+    }
+
+    window.autoFillCustomer = function () {
+      const m = document.getElementById('cmobile').value;
+      if (CUSTOMERS[m]) {
+        document.getElementById('cname').value = CUSTOMERS[m].name;
+        document.getElementById('caddress').value = CUSTOMERS[m].address;
+      }
+    }
+
+    window.loadCustomers = function () {
+      document.getElementById('customersTable').innerHTML = Object.values(CUSTOMERS).map(c => `<tr><td>${c.name}</td><td>${c.mobile}</td><td>${c.address}</td></tr>`).join('');
+    }
+
+    window.saveUdhaar = function () {
+      // Logic to save udhaar (simplified for brevity)
+      const m = document.getElementById('cmobile').value;
+      const t = document.getElementById('grandTotal').innerText;
+      if (!m || t == 0) return;
+      let cur = UDHAAR[m] ? Number(UDHAAR[m].amount) : 0;
+      UDHAAR[m] = { name: document.getElementById('cname').value, mobile: m, amount: cur + Number(t) };
+      saveData(); alert("Udhaar Saved");
+    }
+
+    window.loadUdhaar = function () {
+      document.querySelector('#udhaarTable tbody').innerHTML = Object.values(UDHAAR).map(u => `<tr><td>${u.name}</td><td>${u.mobile}</td><td>${u.amount}</td><td><button onclick="window.clearUdhaar('${u.mobile}')">Clear</button></td></tr>`).join('');
+    }
+
+    window.clearUdhaar = function (m) { delete UDHAAR[m]; saveData(); window.loadUdhaar(); }
+
+    window.printBill = function () { window.print(); }
+
+    window.shareWhatsApp = function () {
+      // Same WA logic
+      const m = document.getElementById('cmobile').value;
+      if (m) window.open(`https://wa.me/91${m}?text=Your bill total is ${document.getElementById('grandTotal').innerText}`);
+    }
+
+    // Init
+    window.loadProducts();
+  </script>
+</body>
+
+</html>
